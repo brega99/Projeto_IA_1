@@ -6,21 +6,21 @@ using UnityEngine;
     [System.Serializable]
     public struct Link
     {
-        public enum direction { UNI, BI }
-        public GameObject node1;
-        public GameObject node2;
-        public direction dir;
+        public enum direction { UNI, BI }//Deixar publica na Unity essa informaçao, ou seja se torna modificavél
+        public GameObject node1;//Deixar publica na Unity essa informaçao, ou seja se torna modificavél
+        public GameObject node2;//Deixar publica na Unity essa informaçao, ou seja se torna modificavél
+        public direction dir;//Deixar publica na Unity essa informaçao, ou seja se torna modificavél
 
-    }
+}
     public class wpmanager : MonoBehaviour
     {
-        public GameObject[] waypoints;//array de pontos para que siga os objetos 
-        public Link[] links;//para poder direcionar o objeto que vaiu patrular 
-        public Graph graph = new Graph();//para  formar  grafico 
+        public GameObject[] waypoints;//Array que permite o player seguir os pontos
+        public Link[] links;//Links que determinam os pontos que o player irá seguir
+        public Graph graph = new Graph();
 
         void Start()
         {
-            // se tamanho waypoints for maior que 0 entra em um verificação de repetição que passa pala os link que vai ver a direção deste objeto vai ir  
+            // Caso o tamanho dos waypoints for > que 0 Começa uma verificação onde se ouver repetição os link irão direcionar o player até determinado ponto  
             if (waypoints.Length > 0)
             {
                 foreach (GameObject wp in waypoints)
@@ -43,7 +43,7 @@ using UnityEngine;
         // Update is called once per frame
         void Update()
         {
-            graph.debugDraw();// para aparecer a linha grafica na scena
+            graph.debugDraw();
         }
     }
 

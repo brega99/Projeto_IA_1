@@ -5,40 +5,40 @@ using UnityEngine;
 public class FollowPath : MonoBehaviour
 {
     Transform goal;
-     float speed = 5.0f;  //velocidade do objeto
-     float accuracy = 2f; // verificção da distacia do ponto
-     float rotSpeed = 3f;// velocidade da rotação
+     float speed = 5.0f;  //velocidade do Player, modificavel diretamente na Unity
+     float accuracy = 2f; //Verificação de distãcia de cada waypoint,modificavel diretamente na Unity
+     float rotSpeed = 3f;// velocidade do player durante a rota, modificavel diretamente na Unity
 
-    public GameObject wpManager;//para pegar o objeto que tenha script wpmanager 
-    GameObject[] wp;// lista de wp para se orientar
+    public GameObject wpManager;//Aciona o Objeto que tenha o código wpmanager 
+    GameObject[] wp;// lista de Waypoints 
     GameObject currentNode;
-    int currentWP = 0; // zera wp
+    int currentWP = 0; 
     Graph g;
 
     // Start is called before the first frame update
     void Start()
     {
 
-        wp = wpManager.GetComponent<wpmanager>().waypoints;        //peganndo os obejto focando no waypoints wpmanager
-        g = wpManager.GetComponent<wpmanager>().graph;        //peganndo os obejto graph dentro do wpmanager
+        wp = wpManager.GetComponent<wpmanager>().waypoints;     
+        g = wpManager.GetComponent<wpmanager>().graph;        
 
 
-        currentNode = wp[0]; // ja começa a lista de wp em 0
+        currentNode = wp[0]; //wp inicia com o valor = 0
     }
 
    
 
-    public void GotoHeliport()// gatilho que execulta uma ação, que seria se mover em um ponto denominado pela varial posta dentro do metodo que é  modificada qando se  poen dentor de um evento na unity
+    public void GotoHeliport()// gatilho que execulta uma ação, nesse caso o botão Heliporto
     {
         g.AStar(currentNode, wp[1]);
         currentWP = 0;
     }
-    public void GotoRuins()// gatilho que execulta uma ação, que seria se mover em um ponto denominado pela varial posta dentro do metodo que é  modificada qando se  poen dentor de um evento na unity
+    public void GotoRuins()// gatilho que execulta uma ação, nesse caso o botão Ruinas 
     {
         g.AStar(currentNode, wp[6]);
         currentWP = 0;
     }
-    public void GotoTanks()// gatilho que execulta uma ação, que seria se mover em um ponto denominado pela varial posta dentro do metodo que é  modificada qando se  poen dentor de um evento na unity
+    public void GotoTanks()// gatilho que execulta uma ação, nessa caso o botão Tanques 
     {
         g.AStar(currentNode, wp[7]);
         currentWP = 0;
@@ -53,10 +53,10 @@ public class FollowPath : MonoBehaviour
         if (g.getPathLength() == 0 || currentWP == g.getPathLength()) // se o valor for 0 ou se for o maior valor da lista ele retorna a valor inicial 
             return;
 
-        //O nó que estará mais próximo neste momento
+        //O point que está mais próximo do player 
         currentNode = g.getPathPoint(currentWP);
 
-        //se estivermos mais próximo bastante do nó o tanque se moverá para o próximo
+        //Caso o player esteja próximo o bastante do point ele irá se mover até o próximo
         if (Vector3.Distance(g.getPathPoint(currentWP).transform.position, transform.position) < accuracy)
         { currentWP++; }
 
